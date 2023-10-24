@@ -23,6 +23,7 @@
         </ul>
         <div class="dropdown">
            <ng-container  *ngIf="(accountService.currentUser$ |async) as user">
+            <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
               <button type="button" class="btn btn-dark">Welcome {{user.username |titlecase}}</button>
               <div class="btn-group" role="group">

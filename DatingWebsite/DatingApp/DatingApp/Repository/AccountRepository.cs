@@ -24,7 +24,7 @@ namespace DatingApp.Repository
 
         public async Task<AppUser> FindUserByUsername(string username)
         {
-            return await context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            return await context.Users.Include( p => p.Photos).SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<bool> IsUserExists(string username)
