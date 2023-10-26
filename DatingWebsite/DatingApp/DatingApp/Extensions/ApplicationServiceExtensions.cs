@@ -26,6 +26,7 @@ namespace DatingApp.Extensions
             services.Configure<CloudinarySetting>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddTransient<LogUserActivity>();
+            services.AddScoped<ILikesRepository, LikeRepository>();
 
             return services;
         }

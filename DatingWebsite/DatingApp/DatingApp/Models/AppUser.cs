@@ -19,10 +19,15 @@ namespace DatingApp.Models
         public string? City { get; set; }
         public string? Country { get; set; }
         public List<Photo>? Photos { get; set; } = new();
-       // public int GetAge()
+
+        public List<UserLike>? LikedByUsers { get; set; }
+        public List<UserLike>? LikedUsers { get; set; }
+
+        // public int GetAge()
         //{
-      //      return DateOfBirth.CalculateAge();
-       // }
+        //      return DateOfBirth.CalculateAge();
+        // }
+
 
 
     }
