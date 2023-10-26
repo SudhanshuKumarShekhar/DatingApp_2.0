@@ -25,7 +25,7 @@
            <ng-container  *ngIf="(accountService.currentUser$ |async) as user">
             <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-              <button type="button" class="btn btn-dark">Welcome {{user.username |titlecase}}</button>
+              <button type="button" class="btn btn-dark">Welcome {{user.knownAs |titlecase}}</button>
               <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-dark dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
                 <div class="dropdown-menu show" aria-labelledby="btnGroupDrop1" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 40px);" data-popper-placement="bottom-start">

@@ -25,6 +25,7 @@ namespace DatingApp.Extensions
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
             services.Configure<CloudinarySetting>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddTransient<LogUserActivity>();
 
             return services;
         }

@@ -2,6 +2,7 @@
 using DatingApp.Data;
 using DatingApp.DTOs;
 using DatingApp.Extensions;
+using DatingApp.Helpers;
 using DatingApp.Interfaces;
 using DatingApp.IRepository;
 using DatingApp.Models;
@@ -25,16 +26,36 @@ namespace DatingApp.Controllers
             this.mapper = mapper;
             this.photoService = photoService;
         }
-        [AllowAnonymous]
+       // [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            // var users = await userRepository.GetUserAsync();
-            // var userToReturn = mapper.Map<IEnumerable<MemberDto>>(users);
-            //  return Ok(userToReturn);
-            var users = await userRepository.GetMembersAsync();
+            // var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = User.GetUsername();
+            var currentUser = await userRepository.GetUserByNameAsync(username);
+            userParams.CurrentUsername = currentUser.UserName;
+            if (string.IsNullOrEmpty(userParams.Gender))
+             {
+                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+            var users = await userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount,
+                users.TotalPages));
             return Ok(users);
+
         }
+        /*
+         * [HttpGet]
+         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
+         {
+             // var users = await userRepository.GetUserAsync();
+             // var userToReturn = mapper.Map<IEnumerable<MemberDto>>(users);
+             //  return Ok(userToReturn);
+             var users = await userRepository.GetUserAsync();
+             return Ok(users);
+         }
+        */
 
         //[HttpGet("{id}")]
         //public async Task<ActionResult<AppUser>> getuser(int id)

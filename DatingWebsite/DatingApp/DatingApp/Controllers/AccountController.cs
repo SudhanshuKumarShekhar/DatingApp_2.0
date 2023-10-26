@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DatingApp.DTOs;
+using DatingApp.Helpers;
 using DatingApp.Interfaces;
 using DatingApp.IRepository;
 using DatingApp.Models;
@@ -40,10 +41,10 @@ namespace DatingApp.Controllers
                 Username = user.UserName,
                 Token = tokenService.CreateToken(user),
                 PhotoUrl = user.Photos.FirstOrDefault(x =>(bool) x.IsMain)?.Url,
-                KnownAs = user.KnownAs
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
-
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -63,7 +64,8 @@ namespace DatingApp.Controllers
                 Username = user.UserName,
                 Token = tokenService.CreateToken(user),
                 PhotoUrl = user.Photos.FirstOrDefault(x => (bool)x.IsMain)?.Url,
-                KnownAs = user.KnownAs
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
         private async Task<bool> UserExists(string username)
