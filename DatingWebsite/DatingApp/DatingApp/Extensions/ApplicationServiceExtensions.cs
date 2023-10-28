@@ -27,6 +27,7 @@ namespace DatingApp.Extensions
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddTransient<LogUserActivity>();
             services.AddScoped<ILikesRepository, LikeRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
 
             return services;
         }
