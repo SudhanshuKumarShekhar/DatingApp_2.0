@@ -26,7 +26,8 @@ namespace DatingApp.Controllers
             this.mapper = mapper;
             this.photoService = photoService;
         }
-       // [AllowAnonymous]
+        // [AllowAnonymous]
+       
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
@@ -62,6 +63,7 @@ namespace DatingApp.Controllers
         //{
         //    return await userRepository.GetUserByIdAsync(id);
         //}
+        
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {

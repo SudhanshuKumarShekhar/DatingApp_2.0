@@ -40,6 +40,9 @@ currentUser$ = this.currentUserSourse.asObservable();
   }
 
   setCurrentUser(user:User){
+    user.roles =[];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles)? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user',JSON.stringify(user));
     this.currentUserSourse.next(user);
   }
@@ -47,5 +50,9 @@ currentUser$ = this.currentUserSourse.asObservable();
   logout(){
     localStorage.removeItem('user');
     this.currentUserSourse.next(null);
+  }
+
+  getDecodedToken(token: string){
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }
