@@ -12,5 +12,10 @@ namespace DatingApp.IRepository
         Task<PagedList<MessageDto>> GetMessageForUser(MessageParams messageParams);
         Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName);
         Task<bool> SaveAllAsync();
+        void AddGroup(Group group);
+        Task<Connection> GetConnection(string connectionId);
+        Task<Group> GetMessageGroup(string groupName);
+        void RemoveConnection(Connection connection);
+        Task<Group> GetGroupForConnection(string connectionId);
     }
 }
