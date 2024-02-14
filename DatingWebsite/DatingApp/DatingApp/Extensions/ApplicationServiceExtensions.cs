@@ -20,15 +20,14 @@ namespace DatingApp.Extensions
             //add core here
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            
             services.AddScoped<IAccountRepository, AccountRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
             services.Configure<CloudinarySetting>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddTransient<LogUserActivity>();
-            services.AddScoped<ILikesRepository, LikeRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSignalR();
             services.AddSingleton<PresenceTracker>();
 

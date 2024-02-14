@@ -24,7 +24,7 @@ export class NavComponent  implements OnInit {
       next: () =>{
         this.toster.success('Scussesfull login');
         this.router.navigateByUrl('/members');
-        this.model ={}
+        this.model ={};
       }
     })
 

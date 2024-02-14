@@ -6,7 +6,7 @@ namespace DatingApp.IRepository
 {
     public interface ILikesRepository
     {
-        Task<bool> SaveAllAsync();
+      
         Task<UserLike> GetUserLike(int sourceUserId, int targetUserId);
         Task<AppUser> GetUserwithLikes(int UserId);
         Task<PagedList<LikeDto>> GetUserLikes(LikesParam likesParam);

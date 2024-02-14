@@ -75,15 +75,14 @@ namespace DatingApp.Repository
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName)
         {
-            var messages =await context.Messages
-                .Include(u => u.Sender).ThenInclude(p => p.Photos)
-                .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+            var query = context.Messages
                 .Where(m => m.RecipientUsername == currentUserName && m.RecipientDeleted == false &&
                 m.SenderUsername == recipientUserName ||
                 m.RecipientUsername == recipientUserName && m.SenderDeleted == false &&
-                m.SenderUsername == currentUserName).OrderBy(m => m.MessageSent).ToListAsync();
+                m.SenderUsername == currentUserName).OrderBy(m => m.MessageSent)
+                .AsQueryable();
 
-            var unreadMessage = messages.Where(m => m.DateRead == null && m.RecipientUsername == currentUserName)
+            var unreadMessage = query.Where(m => m.DateRead == null && m.RecipientUsername == currentUserName)
                                         .ToList();
             if (unreadMessage.Any())
             {
@@ -91,9 +90,9 @@ namespace DatingApp.Repository
                 {
                     message.DateRead = DateTime.UtcNow;
                 }
-                await context.SaveChangesAsync();
+                
             }
-            return mapper.Map< IEnumerable < MessageDto >> (messages);
+            return await query.ProjectTo<MessageDto>(mapper.ConfigurationProvider).ToListAsync();
         }
 
         public void RemoveConnection(Connection connection)
@@ -101,9 +100,6 @@ namespace DatingApp.Repository
             context.Connections.Remove(connection);
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await context.SaveChangesAsync() > 0;
-        }
+       
     }
 }

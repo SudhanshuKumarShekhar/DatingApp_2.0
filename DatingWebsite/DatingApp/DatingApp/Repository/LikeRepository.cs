@@ -56,9 +56,6 @@ namespace DatingApp.Repository
                  .FirstOrDefaultAsync(x => x.Id == UserId);
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await context.SaveChangesAsync() > 0;
-        }
+       
     }
 }

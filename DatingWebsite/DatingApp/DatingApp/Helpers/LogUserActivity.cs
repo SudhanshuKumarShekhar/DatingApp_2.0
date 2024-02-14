@@ -1,4 +1,5 @@
 ﻿using DatingApp.Extensions;
+using DatingApp.Interfaces;
 using DatingApp.IRepository;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -15,11 +16,11 @@ namespace DatingApp.Helpers
             var username = resultContext.HttpContext.User.GetUsername();
             // var userId = resultContext.HttpContext.User.GetUserId();
             
-            var repo = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
+            var uow = resultContext.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
             //var user = await repo.GetUserByIdAsync(userId);
-            var user = await repo.GetUserByNameAsync(username);
+            var user = await uow.UserRepository.GetUserByNameAsync(username);
             user.LastActive = DateTime.UtcNow;
-            await repo.SaveAllAsync();
+            await uow.Complete();
         }
     }
 }
